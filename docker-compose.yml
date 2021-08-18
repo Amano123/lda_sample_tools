@@ -1,0 +1,11 @@
+version: '3'
+services:
+    lda-tool:
+        build:
+            context: ./lda-tool
+            dockerfile: dockerfile
+        container_name: lda-tool
+        volumes:
+            - ./lda-tool/source:/amano
+        tty: true
+
