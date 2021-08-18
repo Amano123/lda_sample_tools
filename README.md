@@ -30,3 +30,11 @@ Latent Dirichlet Allocation（潜在的ディリクレ配分法:LDA）と呼ば�
 | python   | 3.6.9         | 
 | lda      | gensim 4.0.1  | 
 | analyzer | Janome 0.3.10 | 
+
+## 実行
+2021/08/19現在
+```
+docker-compose build
+docker-compose up -d
+docker-compose run lda-tool python lda_model.py
+```
