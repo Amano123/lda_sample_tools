@@ -5,6 +5,8 @@ Latent Dirichlet Allocation（潜在的ディリクレ配分法:LDA）と呼ば�
 ## TODO
 
 - [ ] Hydraの導入を考える 
+  - [X] ~~*簡単に実装してみた*~~ [2021-08-23]
+  - 実際に使ってみて感触を確かめる
 - [ ] データ入力
   - [ ] ファイル指定
 - [ ] 形態素解析器
@@ -34,6 +36,17 @@ Latent Dirichlet Allocation（潜在的ディリクレ配分法:LDA）と呼ば�
 | lda      | gensim 4.0.1  | 
 | analyzer | Janome 0.3.10 | 
 
+# 分析データ
+datasetの中にサンプルファイルとして
+* cooking.txt
+* poli.txt
+
+を置いています。
+
+datasetに追加で用意すれば分析できるようにしています。
+
+
+
 ## 実行
 2021/08/19現在
 ```
@@ -41,3 +54,17 @@ docker-compose build
 docker-compose up -d
 docker-compose run lda-tool python lda_model.py
 ```
+
+## hydraの設定ファイル  
+config/config.yaml
+
+```yaml
+dataset:
+  text_file_path: "poli.txt" #ここで分析ファイルを指定する。
+save_file:
+  save_file_path: "output"
+lda_parameter: # 2021/08/23ではTopic数のみの指定
+  topic_start: 2
+  topic_limit: 40
+  topic_step: 1
+  ```
