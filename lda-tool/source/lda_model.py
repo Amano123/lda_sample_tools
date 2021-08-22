@@ -9,6 +9,10 @@ from gensim.corpora import Dictionary
 from gensim.models.ldamulticore import LdaMulticore
 from gensim.models import TfidfModel
 
+from omegaconf import DictConfig
+from omegaconf import OmegaConf
+import hydra
+
 
 #%%
 class janome_tokenizer():
@@ -60,22 +64,19 @@ class janome_tokenizer():
 class LDA():
     def __init__(
         self, 
+        cfg,
         lda_use_tokenizer: janome_tokenizer, 
-        text_file_path: str = "./dataset/poli.txt", 
-        save_file_path: str = "./output",
-        topic_start: int = 2,
-        topic_limit: int = 40,
-        topic_step: int = 1
         ) -> None:
+        self.original_path = hydra.utils.get_original_cwd()
         self.tokenizer: janome_tokenizer= lda_use_tokenizer
-        self.text_file_path: str= text_file_path
-        self.save_file_path: str = save_file_path
+        self.text_file_path: str= "dataset/" + cfg.dataset.text_file_path
+        self.save_file_path: str = cfg.save_file.save_file_path
         os.makedirs(self.save_file_path, exist_ok=True)
-        self.topic_file_path: str = f"{save_file_path}/topic"
+        self.topic_file_path: str = f"{self.save_file_path}/topic"
         os.makedirs(self.topic_file_path, exist_ok=True)
-        self.text_data: List[str] = open(text_file_path).readlines()
+        self.text_data: List[str] = open(self.original_path + "/" + self.text_file_path).readlines()
         self.token_list: List[List[str]] = self.tokenizer.noun_tokenizer_list(self.text_data)
-        with open(f"{save_file_path}/token_list.csv", mode="w") as f:
+        with open(f"{self.save_file_path}/token_list.csv", mode="w") as f:
             f.write("\n".join(
                 [
                     ",".join(i) 
@@ -83,9 +84,9 @@ class LDA():
                 ]
             )
         )
-        self.topic_start: int = topic_start
-        self.topic_limit: int = topic_limit
-        self.topic_step: int = topic_step
+        self.topic_start: int = cfg.lda_parameter.topic_start
+        self.topic_limit: int = cfg.lda_parameter.topic_limit
+        self.topic_step: int = cfg.lda_parameter.topic_step
     
     def make_dictionary(self) -> Dictionary:
         #word - id 辞書作成
@@ -147,10 +148,14 @@ class LDA():
             self.lda_score_estimation(self.lda_model, n_topic)
             self.save_topic_words(self.lda_model, n_topic)
             
+#%%
+@hydra.main(config_name="config", config_path="config")
+def main(cfg: DictConfig):
+    tokenizer = janome_tokenizer()
+    lda = LDA(cfg,tokenizer)
+    lda.main()
 
 #%%
 if __name__ == '__main__':
-    tokenizer = janome_tokenizer()
-    lda = LDA(tokenizer, text_file_path="./dataset/poli.txt")
-    lda.main()
+    main()
 # %%
