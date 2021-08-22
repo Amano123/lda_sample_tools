@@ -42,7 +42,9 @@ RUN python -m pip --no-cache-dir install --upgrade \
     ipywidgets \
     gensim \
     matplotlib \
-    tqdm
+    tqdm \
+    hydra-core \
+    python-Levenshtein
 
 
 # ディレクトリを指定
