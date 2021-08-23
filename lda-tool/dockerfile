@@ -41,6 +41,7 @@ RUN echo "root:root" | chpasswd && \
 RUN python -m pip --no-cache-dir install --upgrade \
     ipywidgets \
     gensim \
+    janome \
     matplotlib \
     tqdm \
     hydra-core \
