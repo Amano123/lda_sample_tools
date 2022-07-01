@@ -41,6 +41,7 @@ class LDA_Tool(object):
         return corpus
     
     def dictionary_from_tokent_id_extraction(self, dictionary: Dictionary) -> Tuple[List[str], List[int], Dict[int,int]]:
+        #! 必要ない？
         """辞書から単語と単語IDと出現回数を抽出"""
         # 辞書（Dictionary）から、単語とIDのペアを抽出
         tuple_token2id: List[Tuple[str,int]] = list(dictionary.token2id.items())
@@ -53,6 +54,7 @@ class LDA_Tool(object):
         return (token, token_id, counter_dict)
     
     def dictionary_from_tokent_cunt_extraction(self, counter_dict: Dict[int,int]) -> List[int]:
+        #! 必要ない？
         word_counter: List[int] = []
         for index in range(len(counter_dict)):
             word_counter.append(counter_dict[index])
