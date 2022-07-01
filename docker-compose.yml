@@ -2,10 +2,19 @@ version: '3'
 services:
     lda-tool:
         build:
-            context: ./lda-tool
+            context: ./docker-python
             dockerfile: dockerfile
-        container_name: lda-tool
+            args:
+                - USER_NAME=${USER_NAME}
+                - USER_ID=${USER_ID}
+                - GROUP_ID=${GROUP_ID}
+        container_name: python
+        # env_file:
+        #     - .env
         volumes:
-            - ./lda-tool/source:/amano
+            # - ./python/config:/${USER_NAME}/config
+            # - ./lda_tool:/${USER_NAME}/lda_tool
+            # - ./main.py:/${USER_NAME}/main.py
+            # - ./sample_dataset:/${USER_NAME}/dataset
+            - ./workspace:/${USER_NAME}/workspace
         tty: true
-

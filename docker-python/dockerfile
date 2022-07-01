@@ -1,9 +1,12 @@
-FROM tensorflow/tensorflow:2.4.2
+# FROM tensorflow/tensorflow:2.4.2
+FROM python:3.8
 
-LABEL maintainer="amano123"
+ARG USER_NAME
+ARG USER_ID
+ARG GROUP_ID
 
-ENV USER "amano"
-ENV HOME /${USER}
+ENV USER ${USER_NAME}
+ENV HOME /home/${USER}
 
 # サーバーを日本に変更
 # 多分早くなる
@@ -20,8 +23,8 @@ RUN apt-get update \
                 wget \
                 xz-utils \
                 #japanase
-                language-pack-ja-base \
-                language-pack-ja \
+                # language-pack-ja-base \
+                # language-pack-ja \
                 locales 
 
 # 日本語化
@@ -30,15 +33,19 @@ ENV LANG ja_JP.UTF-8
 ENV LC_CTYPE ja_JP.UTF-8
 RUN localedef -f UTF-8 -i ja_JP ja_JP.utf8
 
-# USER
-RUN echo "root:root" | chpasswd && \
-    adduser --disabled-password --gecos "" "${USER}" && \
-    echo "${USER}:${USER}" | chpasswd && \
-    echo "%${USER}    ALL=(ALL)   NOPASSWD:    ALL" >> /etc/sudoers.d/${USER} && \
-    chmod 0440 /etc/sudoers.d/${USER} 
+## make user
+RUN set -x \
+&&  echo "Starting with UID : ${USER_ID}, GID: ${GROUP_ID}" \
+&&  adduser --disabled-password --gecos "" "${USER_NAME}" \
+&&  echo "${USER_NAME}:${USER_NAME}" | chpasswd \
+&&  echo "%${USER_NAME}    ALL=(ALL)   NOPASSWD:    ALL" >> /etc/sudoers.d/${USER_NAME}  \
+&&  chmod 0440 /etc/sudoers.d/${USER_NAME} \
+&&  usermod -u ${USER_ID} ${USER_NAME} \
+&&  groupmod -g ${GROUP_ID} ${USER_NAME} 
 
+USER ${USER}
 # python 
-RUN python -m pip --no-cache-dir install --upgrade \
+RUN python3 -m pip --no-cache-dir install --upgrade \
     ipywidgets \
     gensim \
     janome \
@@ -46,9 +53,5 @@ RUN python -m pip --no-cache-dir install --upgrade \
     tqdm \
     hydra-core \
     python-Levenshtein
-
-
-# ディレクトリを指定
-USER ${USER}
 
 WORKDIR ${HOME}

@@ -1,2 +1,7 @@
+!.gitkeep
 lda-tool/source/.*
 lda-tool/source/outputs
+.DS_Store
+workspace/lda_tool/__pycache__/*
+workspace/output/*
+!workspace/output/.gitkeep

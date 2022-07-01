@@ -49,8 +49,7 @@ class janome_tokenizer():
                     token.surface 
                     for token in self.word_tokenizer.tokenize(text)
                     if token.part_of_speech.split(',')[0] in ['名詞'] 
-                        and token.part_of_speech.split(',')[1] in ['一般']
-                    
+                        and token.part_of_speech.split(',')[1] in ['一般']   
                 ]
             )
         # 空配列削除
