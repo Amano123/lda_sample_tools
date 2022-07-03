@@ -5,3 +5,5 @@ lda-tool/source/outputs
 workspace/lda_tool/__pycache__/*
 workspace/output/*
 !workspace/output/.gitkeep
+workspace/.gitconfig
+.gitignore
