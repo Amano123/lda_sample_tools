@@ -16,5 +16,5 @@ services:
             # - ./lda_tool:/${USER_NAME}/lda_tool
             # - ./main.py:/${USER_NAME}/main.py
             # - ./sample_dataset:/${USER_NAME}/dataset
-            - ./workspace:/${USER_NAME}/workspace
+            - ./workspace:/home/${USER_NAME}/workspace
         tty: true
