@@ -19,15 +19,11 @@ def janome_tokenizer(sentencese: List[str]) -> List[List[str]]:
         words_list.append(words)
     return words_list
 
-def ginza_tokenizer(sentencese: List[str]) -> List[List[str]]:
-    return 0
-    pass
-
 
 class Preprocess(object):
-    def __init__(self, words_list: List[List[str]], output_file_path: str):
-        self.output_file_path: str = output_file_path
-        os.makedirs(self.output_file_path, exist_ok=True)
+    def __init__(self, words_list: List[List[str]]):
+        # self.output_file_path: str = output_file_path
+        # os.makedirs(self.output_file_path, exist_ok=True)
 
         self.words_list = words_list
         self.dictionary: Dictionary = self.make_dictionary(words_list)
@@ -37,8 +33,8 @@ class Preprocess(object):
     def make_dictionary(self, words_list: List[List[str]]) -> Dictionary:
         """辞書を作成"""
         dictionary = corpora.Dictionary(words_list)
-        dictionary.save(f'{self.output_file_path}/dict.dict')
-        dictionary.save_as_text(f'{self.output_file_path}/dict.dict.txt')
+        dictionary.save(f'dict.dict')
+        dictionary.save_as_text(f'dict.dict.txt')
         return dictionary
     
     def make_tf_idf_corpus(self, corpus):
