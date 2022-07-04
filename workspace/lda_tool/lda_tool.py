@@ -44,8 +44,8 @@ class LDA_Tool(object):
         df_data["token_id"] = token_id
         df_data["token"] = token
         df_data["cunt"] = word_counter
-        for topic_num, topic in enumerate(topics_contribution, 1):
-            df_data[f"topic_{topic_num}"] = topic
+        for topic_index, topic in enumerate(topics_contribution, 1):
+            df_data[f"topic_{topic_index}"] = topic
         df_topics_contribution = pd.DataFrame(df_data)
         df_topics_contribution.to_csv(f"{self.output_file_path}/topic.csv")
 
