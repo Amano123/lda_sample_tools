@@ -1,8 +1,0 @@
-dataset:
-  text_file_path: "poli.txt"
-save_file:
-  save_file_path: "output"
-lda_parameter:
-  topic_start: 2
-  topic_limit: 40
-  topic_step: 1
