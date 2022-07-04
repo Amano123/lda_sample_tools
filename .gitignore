@@ -7,3 +7,6 @@ workspace/output/*
 !workspace/output/.gitkeep
 workspace/.gitconfig
 .gitignore
+workspace/multirun/*
+workspace/outputs/*
+workspace/__pycache__/*
