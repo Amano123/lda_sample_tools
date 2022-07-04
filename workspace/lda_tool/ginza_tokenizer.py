@@ -22,7 +22,8 @@ class Ginza_tokenizer():
             doc = self.nlp(sentence)
             for sent in doc.sents:
                 for token in sent:
-                    if  "名詞" in token.tag_:
+                    # if  "名詞" in token.tag_:
+                    if token.pos_ in ["NOUN", "PROPN"]:
                         word_list.append(token.text)
             words_list.append(word_list)
         return words_list
