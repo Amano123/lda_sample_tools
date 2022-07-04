@@ -9,10 +9,10 @@ import numpy as np
 from datetime import datetime
 
 class LDA_Tool(object):
-    def __init__(self, dictionary, corpus, output_file_path: str):
+    def __init__(self, dictionary, corpus, num_topic: int, output_file_path: str):
         self.dictionary: Dictionary = dictionary
         self.corpus: List[Tuple[int,int]] = corpus
-        self.num_topic: int = 5
+        self.num_topic: int = num_topic
 
         self.output_file_path: str = output_file_path
         os.makedirs(self.output_file_path, exist_ok=True)
