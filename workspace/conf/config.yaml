@@ -1,0 +1,4 @@
+dataset:
+  text_file_path: "/home/amano/workspace/sample_dataset/2019-02-15_train.txt"
+LDA :
+  topic_num: 1
