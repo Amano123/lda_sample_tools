@@ -62,6 +62,7 @@ class LDA_Tool(object):
         return (token, token_id, counter_dict)
     
     def dictionary_from_tokent_cunt_extraction(self, counter_dict: Dict[int,int]) -> List[int]:
+        """単語の出現回数を抽出"""
         word_counter: List[int] = []
         for index in range(len(counter_dict)):
             word_counter.append(counter_dict[index])
