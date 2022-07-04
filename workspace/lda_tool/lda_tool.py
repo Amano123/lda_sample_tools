@@ -9,13 +9,13 @@ import numpy as np
 from datetime import datetime
 
 class LDA_Tool(object):
-    def __init__(self, dictionary, corpus, num_topic: int, output_file_path: str):
+    def __init__(self, dictionary, corpus, num_topic: int):
         self.dictionary: Dictionary = dictionary
         self.corpus: List[Tuple[int,int]] = corpus
         self.num_topic: int = num_topic
 
-        self.output_file_path: str = output_file_path
-        os.makedirs(self.output_file_path, exist_ok=True)
+        # self.output_file_path: str = output_file_path
+        # os.makedirs(self.output_file_path, exist_ok=True)
     
     def lda_traning(self, corpus: List[Tuple[int,int]], num_topic: int, dictionary: Dictionary) -> LdaModel:
         """LDAを学習する"""
@@ -25,10 +25,12 @@ class LDA_Tool(object):
             id2word=dictionary,
             alpha = 'auto',
             eta = 'auto',
+            passes=100,
             random_state = 0,
+            iterations = 100,
             per_word_topics = True
         )
-        lda_model.save(f"{self.output_file_path}/lda_modal")
+        lda_model.save(f"lda_modal")
         return lda_model
 
     def lda_predicate(self, lda_model: LdaModel) -> List[List[float]]:
@@ -40,6 +42,7 @@ class LDA_Tool(object):
         return topics_contribution
     
     def make_topic_table(self, token: List[str], token_id: List[int], topics_contribution: List[List[float]], word_counter: List[int]):
+        """Topicの表を作成"""
         df_data = {}
         df_data["token_id"] = token_id
         df_data["token"] = token
@@ -47,7 +50,7 @@ class LDA_Tool(object):
         for topic_index, topic in enumerate(topics_contribution, 1):
             df_data[f"topic_{topic_index}"] = topic
         df_topics_contribution = pd.DataFrame(df_data)
-        df_topics_contribution.to_csv(f"{self.output_file_path}/topic.csv")
+        df_topics_contribution.to_csv(f"topic.csv")
 
     def dictionary_from_tokent_id_extraction(self, dictionary: Dictionary) -> Tuple[List[str], List[int], Dict[int,int]]:
         """辞書から単語と単語IDと出現回数を抽出"""
@@ -79,4 +82,4 @@ class LDA_Tool(object):
         # Topicの寄与率を抽出
         self.topics_contribution = self.lda_predicate(self.lda_model)
         self.make_topic_table(self.tokens, self.token_ids, self.topics_contribution, self.word_counter)
-        return self.lda_model
+        # return self.lda_model
